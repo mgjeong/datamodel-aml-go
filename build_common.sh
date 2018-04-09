@@ -30,6 +30,7 @@ AML_TARGET_ARCH="$(uname -m)"
 AML_WITH_DEP=false
 AML_BUILD_MODE="release"
 AML_LOGGING="off"
+AML_EXCLD_PROTOBUF=true
 
 install_dependencies() {
     # clone datamodel-aml-c library
@@ -44,7 +45,7 @@ install_dependencies() {
     # Build datamodel-aml-c library
     cd $PROJECT_ROOT/dependencies/datamodel-aml-c
     echo -e "${GREEN}Building datamodel-aml-c library and its dependencies${NO_COLOUR}"
-    ./build_common.sh --target_arch=${AML_TARGET_ARCH} --with_dependencies=${AML_WITH_DEP} --build_mode=${AML_BUILD_MODE} --logging=${AML_LOGGING}
+    ./build_common.sh --target_arch=${AML_TARGET_ARCH} --with_dependencies=${AML_WITH_DEP} --build_mode=${AML_BUILD_MODE} --logging=${AML_LOGGING} --exclude_protobuf=${AML_EXCLD_PROTOBUF}
     echo -e "${GREEN}Install dependencies done${NO_COLOUR}"
 }
 
@@ -94,11 +95,12 @@ clean_aml() {
 usage() {
     echo -e "${BLUE}Usage:${NO_COLOUR} ./build_common.sh <option>"
     echo -e "${GREEN}Options:${NO_COLOUR}"
-    echo "  --target_arch=[x86|x86_64|armhf|arm64]                       :  Choose Target Architecture"
-    echo "  --with_dependencies=(default: false)                         :  Build datamodel-aml-go along with dependencies [datamodel-aml-c]"
-    echo "  --build_mode=[release|debug](default: release)               :  Build datamodel-aml-c library and samples in release or debug mode"
-    echo "  -c                                                           :  Clean aml Repository and its dependencies"
-    echo "  -h / --help                                                  :  Display help and exit [Be careful it will also remove GOPATH:src, pkg and bin]"
+    echo "  --target_arch=[x86|x86_64|armhf|arm64]                      :  Choose Target Architecture"
+    echo "  --with_dependencies=(default: false)                        :  Build datamodel-aml-go along with dependencies [datamodel-aml-c]"
+    echo "  --build_mode=[release|debug](default: release)              :  Build datamodel-aml-c library and samples in release or debug mode"
+    echo "  --exclude_protobuf=[true|false](default: true)              :  Exclude build of protobuf library [Required for datamodel-aml-c's dependency]"
+    echo "  -c                                                          :  Clean aml Repository and its dependencies"
+    echo "  -h / --help                                                 :  Display help and exit [Be careful it will also remove GOPATH:src, pkg and bin]"
     echo -e "${GREEN}Examples: ${NO_COLOUR}"
     echo -e "${BLUE}  build:-${NO_COLOUR}"
     echo "  $ ./build_common.sh --target_arch=x86_64"
@@ -145,7 +147,7 @@ build_aml() {
     cp -r dependencies/datamodel-aml-c/out/linux/${AML_TARGET_ARCH}/${AML_BUILD_MODE}/lib* ./src/go/extlibs
 
     export CGO_CFLAGS=-I$PWD/dependencies/datamodel-aml-c/include
-    export CGO_LDFLAGS=-L$PWD/src/go/extlibs 
+    export CGO_LDFLAGS=-L$PWD/src/go/extlibs
     export CGO_LDFLAGS+=" -lcaml -laml"
 
     if [ "x86" = ${AML_TARGET_ARCH} ]; then
@@ -190,6 +192,11 @@ process_cmd_args() {
             --build_mode=*)
                 AML_BUILD_MODE="${1#*=}";
                 echo -e "${GREEN}Build mode is: $AML_BUILD_MODE${NO_COLOUR}"
+                shift 1;
+                ;;
+            --exclude_protobuf=*)
+                AML_EXCLD_PROTOBUF="${1#*=}";
+                echo -e "${GREEN}is Protobuf excluded : $AML_EXCLD_PROTOBUF${NO_COLOUR}"
                 shift 1;
                 ;;
             -c)
