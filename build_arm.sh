@@ -16,7 +16,7 @@
 ###############################################################################
 
 #!/bin/bash
-./build_common.sh "$@" --target_arch=armhf
+./build_common.sh "$@" --target_arch=armhf --with_dependencies=true
 if [ $? -ne 0 ]; then
     exit 1
 fi
