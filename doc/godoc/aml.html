@@ -1,0 +1,707 @@
+use 'godoc cmd/go/aml' for documentation on the go/aml command 
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "go/aml"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+aml package which provides simplified APIs for aml data parsing.
+</p>
+
+			</div>
+		</div>
+		
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="#AMLData">type AMLData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#CreateAMLData">func CreateAMLData() *AMLData</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLData.DestroyAMLData">func (dataInstance *AMLData) DestroyAMLData() AMLErrorCode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLData.GetKeys">func (dataInstance *AMLData) GetKeys() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLData.GetValueAMLData">func (dataInstance *AMLData) GetValueAMLData(key string) *AMLData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLData.GetValueStr">func (dataInstance *AMLData) GetValueStr(key string) string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLData.GetValueStrArr">func (dataInstance *AMLData) GetValueStrArr(key string) []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLData.GetValueType">func (dataInstance *AMLData) GetValueType(key string) AMLValueType</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLData.SetValueAMLData">func (dataInstance *AMLData) SetValueAMLData(key string, value *AMLData) AMLErrorCode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLData.SetValueStr">func (dataInstance *AMLData) SetValueStr(key string, value string) AMLErrorCode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLData.SetValueStrArr">func (dataInstance *AMLData) SetValueStrArr(key string, values []string) AMLErrorCode</a></dd>
+				
+			
+				
+				<dd><a href="#AMLErrorCode">type AMLErrorCode</a></dd>
+				
+				
+			
+				
+				<dd><a href="#AMLObject">type AMLObject</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#CreateAMLObject">func CreateAMLObject(deviceId string, timeStamp string) *AMLObject</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#CreateAMLObjectWithID">func CreateAMLObjectWithID(deviceId string, timeStamp string, id string) *AMLObject</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLObject.AddData">func (amlInstance *AMLObject) AddData(name string, data *AMLData) AMLErrorCode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLObject.DestroyAMLObject">func (amlInstance *AMLObject) DestroyAMLObject() AMLErrorCode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLObject.GetData">func (amlInstance *AMLObject) GetData(name string) *AMLData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLObject.GetDataNames">func (amlInstance *AMLObject) GetDataNames() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLObject.GetDeviceId">func (amlInstance *AMLObject) GetDeviceId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLObject.GetId">func (amlInstance *AMLObject) GetId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AMLObject.GetTimeStamp">func (amlInstance *AMLObject) GetTimeStamp() string</a></dd>
+				
+			
+				
+				<dd><a href="#AMLValueType">type AMLValueType</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Representation">type Representation</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#CreateRepresentation">func CreateRepresentation(filePath string) *Representation</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Representation.AmlToData">func (repInstance *Representation) AmlToData(amlStr string) *AMLObject</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Representation.DataToAml">func (repInstance *Representation) DataToAml(amlObject *AMLObject) string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Representation.DestroyRepresentation">func (repInstance *Representation) DestroyRepresentation() AMLErrorCode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Representation.GetConfigInfo">func (repInstance *Representation) GetConfigInfo() *AMLObject</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Representation.GetRepresentationId">func (repInstance *Representation) GetRepresentationId() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h4>Package files</h4>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/go/aml/amldata.go">amldata.go</a>
+			
+				<a href="/src/go/aml/amlerrorcode.go">amlerrorcode.go</a>
+			
+				<a href="/src/go/aml/amlobject.go">amlobject.go</a>
+			
+				<a href="/src/go/aml/amlvaluetype.go">amlvaluetype.go</a>
+			
+				<a href="/src/go/aml/representation.go">representation.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				<p>
+Constants represents AML error codes.
+</p>
+
+				<pre>const (
+    <span id="AML_OK">AML_OK</span>                 = 0
+    <span id="AML_INVALID_PARAM">AML_INVALID_PARAM</span>      = 1
+    <span id="AML_INVALID_DATA">AML_INVALID_DATA</span>       = 2
+    <span id="AML_INVALID_FILE_PATH">AML_INVALID_FILE_PATH</span>  = 3
+    <span id="AML_INVALID_AML_SCHEMA">AML_INVALID_AML_SCHEMA</span> = 4
+    <span id="AML_INVALID_XML_STRING">AML_INVALID_XML_STRING</span> = 5
+    <span id="AML_NO_MEMORY">AML_NO_MEMORY</span>          = 6
+    <span id="AML_KEY_NOT_EXIST">AML_KEY_NOT_EXIST</span>      = 7
+    <span id="AML_KEY_ALREADY_EXIST">AML_KEY_ALREADY_EXIST</span>  = 8
+    <span id="AML_INVALID_DATA_TYPE">AML_INVALID_DATA_TYPE</span>  = 9
+)</pre>
+			
+				<p>
+Constants represents AML value types.
+</p>
+
+				<pre>const (
+    <span id="AMLVALTYPE_STRING">AMLVALTYPE_STRING</span>      = 0
+    <span id="AMLVALTYPE_STRINGARRAY">AMLVALTYPE_STRINGARRAY</span> = 1
+    <span id="AMLVALTYPE_AMLDATA">AMLVALTYPE_AMLDATA</span>     = 2
+)</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="AMLData">type <a href="/src/target/amldata.go?s=1025:1075#L18">AMLData</a>
+				<a class="permalink" href="#AMLData">&#xb6;</a>
+			</h2>
+			<p>
+Structure represents AMLData.
+</p>
+
+			<pre>type AMLData struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="CreateAMLData">func <a href="/src/target/amldata.go?s=1111:1140#L23">CreateAMLData</a>
+					<a class="permalink" href="#CreateAMLData">&#xb6;</a>
+				</h3>
+				<pre>func CreateAMLData() *<a href="#AMLData">AMLData</a></pre>
+				<p>
+Create an instance of AMLData.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="AMLData.DestroyAMLData">func (*AMLData) <a href="/src/target/amldata.go?s=1312:1370#L33">DestroyAMLData</a>
+					<a class="permalink" href="#AMLData.DestroyAMLData">&#xb6;</a>
+				</h3>
+				<pre>func (dataInstance *<a href="#AMLData">AMLData</a>) DestroyAMLData() <a href="#AMLErrorCode">AMLErrorCode</a></pre>
+				<p>
+Destroy an instance of AMLData.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLData.GetKeys">func (*AMLData) <a href="/src/target/amldata.go?s=3515:3562#L94">GetKeys</a>
+					<a class="permalink" href="#AMLData.GetKeys">&#xb6;</a>
+				</h3>
+				<pre>func (dataInstance *<a href="#AMLData">AMLData</a>) GetKeys() []<a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Get a list of key that AMLData has.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLData.GetValueAMLData">func (*AMLData) <a href="/src/target/amldata.go?s=3226:3291#L84">GetValueAMLData</a>
+					<a class="permalink" href="#AMLData.GetValueAMLData">&#xb6;</a>
+				</h3>
+				<pre>func (dataInstance *<a href="#AMLData">AMLData</a>) GetValueAMLData(key <a href="/pkg/builtin/#string">string</a>) *<a href="#AMLData">AMLData</a></pre>
+				<p>
+Get AMLData value which matchs a key in AMLData.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLData.GetValueStr">func (*AMLData) <a href="/src/target/amldata.go?s=2558:2617#L64">GetValueStr</a>
+					<a class="permalink" href="#AMLData.GetValueStr">&#xb6;</a>
+				</h3>
+				<pre>func (dataInstance *<a href="#AMLData">AMLData</a>) GetValueStr(key <a href="/pkg/builtin/#string">string</a>) <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Get string value which matchs a key in AMLData.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLData.GetValueStrArr">func (*AMLData) <a href="/src/target/amldata.go?s=2794:2858#L71">GetValueStrArr</a>
+					<a class="permalink" href="#AMLData.GetValueStrArr">&#xb6;</a>
+				</h3>
+				<pre>func (dataInstance *<a href="#AMLData">AMLData</a>) GetValueStrArr(key <a href="/pkg/builtin/#string">string</a>) []<a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Get string array value which matchs a key in AMLData.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLData.GetValueType">func (*AMLData) <a href="/src/target/amldata.go?s=3888:3954#L107">GetValueType</a>
+					<a class="permalink" href="#AMLData.GetValueType">&#xb6;</a>
+				</h3>
+				<pre>func (dataInstance *<a href="#AMLData">AMLData</a>) GetValueType(key <a href="/pkg/builtin/#string">string</a>) <a href="#AMLValueType">AMLValueType</a></pre>
+				<p>
+Get AML datatype of value for the given key.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLData.SetValueAMLData">func (*AMLData) <a href="/src/target/amldata.go?s=2254:2339#L56">SetValueAMLData</a>
+					<a class="permalink" href="#AMLData.SetValueAMLData">&#xb6;</a>
+				</h3>
+				<pre>func (dataInstance *<a href="#AMLData">AMLData</a>) SetValueAMLData(key <a href="/pkg/builtin/#string">string</a>, value *<a href="#AMLData">AMLData</a>) <a href="#AMLErrorCode">AMLErrorCode</a></pre>
+				<p>
+Set key/value as a AMLData value to AMLData.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLData.SetValueStr">func (*AMLData) <a href="/src/target/amldata.go?s=1489:1568#L38">SetValueStr</a>
+					<a class="permalink" href="#AMLData.SetValueStr">&#xb6;</a>
+				</h3>
+				<pre>func (dataInstance *<a href="#AMLData">AMLData</a>) SetValueStr(key <a href="/pkg/builtin/#string">string</a>, value <a href="/pkg/builtin/#string">string</a>) <a href="#AMLErrorCode">AMLErrorCode</a></pre>
+				<p>
+Set key/value as a string value to AMLData.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLData.SetValueStrArr">func (*AMLData) <a href="/src/target/amldata.go?s=1732:1817#L43">SetValueStrArr</a>
+					<a class="permalink" href="#AMLData.SetValueStrArr">&#xb6;</a>
+				</h3>
+				<pre>func (dataInstance *<a href="#AMLData">AMLData</a>) SetValueStrArr(key <a href="/pkg/builtin/#string">string</a>, values []<a href="/pkg/builtin/#string">string</a>) <a href="#AMLErrorCode">AMLErrorCode</a></pre>
+				<p>
+Set key/value as a string array value to AMLData.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="AMLErrorCode">type <a href="/src/target/amlerrorcode.go?s=793:814#L10">AMLErrorCode</a>
+				<a class="permalink" href="#AMLErrorCode">&#xb6;</a>
+			</h2>
+			
+			<pre>type AMLErrorCode <a href="/pkg/builtin/#int">int</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AMLObject">type <a href="/src/target/amlobject.go?s=1027:1083#L18">AMLObject</a>
+				<a class="permalink" href="#AMLObject">&#xb6;</a>
+			</h2>
+			<p>
+Structure represents AMLObject.
+</p>
+
+			<pre>type AMLObject struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="CreateAMLObject">func <a href="/src/target/amlobject.go?s=1121:1187#L23">CreateAMLObject</a>
+					<a class="permalink" href="#CreateAMLObject">&#xb6;</a>
+				</h3>
+				<pre>func CreateAMLObject(deviceId <a href="/pkg/builtin/#string">string</a>, timeStamp <a href="/pkg/builtin/#string">string</a>) *<a href="#AMLObject">AMLObject</a></pre>
+				<p>
+Create an instance of AMLObject.
+</p>
+
+				
+				
+			
+				
+				<h3 id="CreateAMLObjectWithID">func <a href="/src/target/amlobject.go?s=1417:1500#L33">CreateAMLObjectWithID</a>
+					<a class="permalink" href="#CreateAMLObjectWithID">&#xb6;</a>
+				</h3>
+				<pre>func CreateAMLObjectWithID(deviceId <a href="/pkg/builtin/#string">string</a>, timeStamp <a href="/pkg/builtin/#string">string</a>, id <a href="/pkg/builtin/#string">string</a>) *<a href="#AMLObject">AMLObject</a></pre>
+				<p>
+Create an instance of AMLObject with id.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="AMLObject.AddData">func (*AMLObject) <a href="/src/target/amlobject.go?s=1955:2033#L48">AddData</a>
+					<a class="permalink" href="#AMLObject.AddData">&#xb6;</a>
+				</h3>
+				<pre>func (amlInstance *<a href="#AMLObject">AMLObject</a>) AddData(name <a href="/pkg/builtin/#string">string</a>, data *<a href="#AMLData">AMLData</a>) <a href="#AMLErrorCode">AMLErrorCode</a></pre>
+				<p>
+Add AMLData to AMLObject using AMLData key that to match AMLData value.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLObject.DestroyAMLObject">func (*AMLObject) <a href="/src/target/amlobject.go?s=1744:1805#L43">DestroyAMLObject</a>
+					<a class="permalink" href="#AMLObject.DestroyAMLObject">&#xb6;</a>
+				</h3>
+				<pre>func (amlInstance *<a href="#AMLObject">AMLObject</a>) DestroyAMLObject() <a href="#AMLErrorCode">AMLErrorCode</a></pre>
+				<p>
+Destroy an instance of AMLObject.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLObject.GetData">func (*AMLObject) <a href="/src/target/amlobject.go?s=2273:2332#L56">GetData</a>
+					<a class="permalink" href="#AMLObject.GetData">&#xb6;</a>
+				</h3>
+				<pre>func (amlInstance *<a href="#AMLObject">AMLObject</a>) GetData(name <a href="/pkg/builtin/#string">string</a>) *<a href="#AMLData">AMLData</a></pre>
+				<p>
+Get AMLData which matched input name string with AMLObject&#39;s amlDatas key.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLObject.GetDataNames">func (*AMLObject) <a href="/src/target/amlobject.go?s=2564:2617#L66">GetDataNames</a>
+					<a class="permalink" href="#AMLObject.GetDataNames">&#xb6;</a>
+				</h3>
+				<pre>func (amlInstance *<a href="#AMLObject">AMLObject</a>) GetDataNames() []<a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Get a list of AMLData names that AMLObject has.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLObject.GetDeviceId">func (*AMLObject) <a href="/src/target/amlobject.go?s=2943:2993#L79">GetDeviceId</a>
+					<a class="permalink" href="#AMLObject.GetDeviceId">&#xb6;</a>
+				</h3>
+				<pre>func (amlInstance *<a href="#AMLObject">AMLObject</a>) GetDeviceId() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Get deviceId of AMLObject.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLObject.GetId">func (*AMLObject) <a href="/src/target/amlobject.go?s=3317:3361#L93">GetId</a>
+					<a class="permalink" href="#AMLObject.GetId">&#xb6;</a>
+				</h3>
+				<pre>func (amlInstance *<a href="#AMLObject">AMLObject</a>) GetId() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Get id of AMLObject.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AMLObject.GetTimeStamp">func (*AMLObject) <a href="/src/target/amlobject.go?s=3122:3173#L86">GetTimeStamp</a>
+					<a class="permalink" href="#AMLObject.GetTimeStamp">&#xb6;</a>
+				</h3>
+				<pre>func (amlInstance *<a href="#AMLObject">AMLObject</a>) GetTimeStamp() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Get timeStamp of AMLObject.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="AMLValueType">type <a href="/src/target/amlvaluetype.go?s=793:814#L10">AMLValueType</a>
+				<a class="permalink" href="#AMLValueType">&#xb6;</a>
+			</h2>
+			
+			<pre>type AMLValueType <a href="/pkg/builtin/#int">int</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Representation">type <a href="/src/target/representation.go?s=1089:1154#L18">Representation</a>
+				<a class="permalink" href="#Representation">&#xb6;</a>
+			</h2>
+			<p>
+Structure represents Representation.
+</p>
+
+			<pre>type Representation struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="CreateRepresentation">func <a href="/src/target/representation.go?s=1223:1281#L23">CreateRepresentation</a>
+					<a class="permalink" href="#CreateRepresentation">&#xb6;</a>
+				</h3>
+				<pre>func CreateRepresentation(filePath <a href="/pkg/builtin/#string">string</a>) *<a href="#Representation">Representation</a></pre>
+				<p>
+Contructs an instance of Representation for the given aml file.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Representation.AmlToData">func (*Representation) <a href="/src/target/representation.go?s=2700:2770#L67">AmlToData</a>
+					<a class="permalink" href="#Representation.AmlToData">&#xb6;</a>
+				</h3>
+				<pre>func (repInstance *<a href="#Representation">Representation</a>) AmlToData(amlStr <a href="/pkg/builtin/#string">string</a>) *<a href="#AMLObject">AMLObject</a></pre>
+				<p>
+converts AML(XML) string to AMLObject to match the AML model information
+which is set on CreateRepresentation().
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Representation.DataToAml">func (*Representation) <a href="/src/target/representation.go?s=2327:2400#L56">DataToAml</a>
+					<a class="permalink" href="#Representation.DataToAml">&#xb6;</a>
+				</h3>
+				<pre>func (repInstance *<a href="#Representation">Representation</a>) DataToAml(amlObject *<a href="#AMLObject">AMLObject</a>) <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Converts AMLObject to AML(XML) string to match the AML model information
+which is set on CreateRepresentation().
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Representation.DestroyRepresentation">func (*Representation) <a href="/src/target/representation.go?s=1502:1573#L33">DestroyRepresentation</a>
+					<a class="permalink" href="#Representation.DestroyRepresentation">&#xb6;</a>
+				</h3>
+				<pre>func (repInstance *<a href="#Representation">Representation</a>) DestroyRepresentation() <a href="#AMLErrorCode">AMLErrorCode</a></pre>
+				<p>
+Destroy an instance of Representation.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Representation.GetConfigInfo">func (*Representation) <a href="/src/target/representation.go?s=1962:2023#L45">GetConfigInfo</a>
+					<a class="permalink" href="#Representation.GetConfigInfo">&#xb6;</a>
+				</h3>
+				<pre>func (repInstance *<a href="#Representation">Representation</a>) GetConfigInfo() *<a href="#AMLObject">AMLObject</a></pre>
+				<p>
+Get AMLObject that contains configuration data which is present in RoleClassLib.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Representation.GetRepresentationId">func (*Representation) <a href="/src/target/representation.go?s=1710:1773#L38">GetRepresentationId</a>
+					<a class="permalink" href="#Representation.GetRepresentationId">&#xb6;</a>
+				</h3>
+				<pre>func (repInstance *<a href="#Representation">Representation</a>) GetRepresentationId() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Get AutomationML SystemUnitClassLib&#39;s unique ID.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
