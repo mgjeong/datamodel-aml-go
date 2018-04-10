@@ -27,12 +27,16 @@ PROJECT_ROOT=$(pwd)
 export GOPATH=$PWD
 DEP_ROOT=$(pwd)/dependencies
 AML_TARGET_ARCH="$(uname -m)"
-AML_WITH_DEP=false
+AML_INSTALL_PREREQUISITES=false
 AML_BUILD_MODE="release"
 AML_LOGGING="off"
-AML_EXCLD_PROTOBUF=true
+AML_DISABLE_PROTOBUF=false
 
 install_dependencies() {
+    if [ "debug" = ${AML_BUILD_MODE} ]; then
+        AML_LOGGING="on"
+    fi
+
     # clone datamodel-aml-c library
     if [ -d "./dependencies/datamodel-aml-c" ] ; then
         echo "dependencies/datamodel-aml-c folder exist"
@@ -45,7 +49,7 @@ install_dependencies() {
     # Build datamodel-aml-c library
     cd $PROJECT_ROOT/dependencies/datamodel-aml-c
     echo -e "${GREEN}Building datamodel-aml-c library and its dependencies${NO_COLOUR}"
-    ./build_common.sh --target_arch=${AML_TARGET_ARCH} --with_dependencies=${AML_WITH_DEP} --build_mode=${AML_BUILD_MODE} --logging=${AML_LOGGING} --exclude_protobuf=${AML_EXCLD_PROTOBUF}
+    ./build_common.sh --target_arch=${AML_TARGET_ARCH} --install_prerequisites=${AML_INSTALL_PREREQUISITES} --build_mode=${AML_BUILD_MODE} --logging=${AML_LOGGING} --disable_protobuf=${AML_DISABLE_PROTOBUF}
     echo -e "${GREEN}Install dependencies done${NO_COLOUR}"
 }
 
@@ -96,34 +100,24 @@ usage() {
     echo -e "${BLUE}Usage:${NO_COLOUR} ./build_common.sh <option>"
     echo -e "${GREEN}Options:${NO_COLOUR}"
     echo "  --target_arch=[x86|x86_64|armhf|arm64]                      :  Choose Target Architecture"
-    echo "  --with_dependencies=(default: false)                        :  Build datamodel-aml-go along with dependencies [datamodel-aml-c]"
-    echo "  --build_mode=[release|debug](default: release)              :  Build datamodel-aml-c library and samples in release or debug mode"
-    echo "  --exclude_protobuf=[true|false](default: true)              :  Exclude build of protobuf library [Required for datamodel-aml-c's dependency]"
+    echo "  --build_mode=[release|debug](default: release)              :  Build in release or debug mode"
+    echo "  --disable_protobuf=[true|false](default: false)             :  Disable protobuf feature"
+    echo "  --install_prerequisites=[true|false](default: false)        :  Install the prerequisite S/W to build aml [Protocol-buffer]"
     echo "  -c                                                          :  Clean aml Repository and its dependencies"
     echo "  -h / --help                                                 :  Display help and exit [Be careful it will also remove GOPATH:src, pkg and bin]"
     echo -e "${GREEN}Examples: ${NO_COLOUR}"
     echo -e "${BLUE}  build:-${NO_COLOUR}"
     echo "  $ ./build_common.sh --target_arch=x86_64"
-    echo "  $ ./build_common.sh --with_dependencies=true --target_arch=x86_64 "
-    echo -e "${BLUE}  clean:-${NO_COLOUR}"
+    echo "  $ ./build_common.sh --install_prerequisites=true --target_arch=x86_64 "
     echo -e "${BLUE}  debug mode build:-${NO_COLOUR}"
     echo "  $ ./build_common.sh --target_arch=x86_64 --build_mode=debug"
+    echo -e "${BLUE}  clean:-${NO_COLOUR}"
     echo "  $ ./build_common.sh -c"
     echo -e "${BLUE}  help:-${NO_COLOUR}"
     echo "  $ ./build_common.sh -h"
-    echo -e "${GREEN}Notes: ${NO_COLOUR}"
-    echo "  - While building newly for any architecture use -with_dependencies=true option."
 }
 
 build_aml() {
-    if [ "debug" = ${AML_BUILD_MODE} ]; then
-        AML_LOGGING="on"
-    fi
-
-    #dependencies
-    if [ ${AML_WITH_DEP} = true ]; then
-        install_dependencies
-    fi
     cd $PROJECT_ROOT
     if [ ! -d "./src/go" ] ; then
         mkdir src
@@ -172,16 +166,13 @@ process_cmd_args() {
 
     while [ "$#" -gt 0  ]; do
         case "$1" in
-            --with_dependencies=*)
-                AML_WITH_DEP="${1#*=}";
-                if [ ${AML_WITH_DEP} = true ]; then
-                    echo -e "${BLUE}Build with depedencies${NO_COLOUR}"
-                elif [ ${AML_WITH_DEP} = false ]; then
-                    echo -e "${BLUE}Build without depedencies${NO_COLOUR}"
-                else
-                    echo -e "${BLUE}Build without depedencies${NO_COLOUR}"
+            --install_prerequisites=*)
+                AML_INSTALL_PREREQUISITES="${1#*=}";
+                if [ ${AML_INSTALL_PREREQUISITES} != true ] && [ ${AML_INSTALL_PREREQUISITES} != false ]; then
+                    echo -e "${RED}Unknown option for --install_prerequisites${NO_COLOUR}"
                     shift 1; exit 0
                 fi
+                echo -e "${GREEN}Install the prerequisites before build: ${AML_INSTALL_PREREQUISITES}${NO_COLOUR}"
                 shift 1;
                 ;;
             --target_arch=*)
@@ -194,9 +185,13 @@ process_cmd_args() {
                 echo -e "${GREEN}Build mode is: $AML_BUILD_MODE${NO_COLOUR}"
                 shift 1;
                 ;;
-            --exclude_protobuf=*)
-                AML_EXCLD_PROTOBUF="${1#*=}";
-                echo -e "${GREEN}is Protobuf excluded : $AML_EXCLD_PROTOBUF${NO_COLOUR}"
+            --disable_protobuf=*)
+                AML_DISABLE_PROTOBUF="${1#*=}";
+                if [ ${AML_DISABLE_PROTOBUF} != true ] && [ ${AML_DISABLE_PROTOBUF} != false ]; then
+                    echo -e "${RED}Unknown option for --disable_protobuf${NO_COLOUR}"
+                    shift 1; exit 0
+                fi
+                echo -e "${GREEN}is Protobuf disabled : $AML_DISABLE_PROTOBUF${NO_COLOUR}"
                 shift 1;
                 ;;
             -c)
@@ -226,6 +221,7 @@ process_cmd_args() {
 }
 
 process_cmd_args "$@"
+install_dependencies
 build_aml
 echo -e "${GREEN}Build done${NO_COLOUR}"
 

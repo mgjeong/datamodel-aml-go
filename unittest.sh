@@ -20,7 +20,11 @@
 PROJECT_ROOT=$(pwd)
 
 #build aml module
-./build_common.sh --target_arch=x86_64 --with_dependencies=true
+./build_common.sh "$@" --target_arch=x86_64
+
+if [ $? -ne 0 ]; then
+    exit 1
+fi
 
 #Run unit test and code coverage
 echo -e "Build unit testcases"

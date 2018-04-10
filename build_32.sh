@@ -16,7 +16,7 @@
 ###############################################################################
 
 #!/bin/bash
-./build_common.sh "$@" --target_arch=x86 --with_dependencies=true
+./build_common.sh "$@" --target_arch=x86
 if [ $? -ne 0 ]; then
     exit 1
 fi
