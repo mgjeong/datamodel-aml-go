@@ -87,6 +87,17 @@ build_armhf() {
     CGO_LDFLAGS+='-Bstatic -Bdynamic -lstdc++ -lm' GOOS=linux GOARCH=arm CGO_ENABLED=1 CC=arm-linux-gnueabihf-gcc-4.8 CXX=arm-linux-gnueabihf-g++-4.8 go build -a sample.go
 }
 
+build_armhf_native() {
+    cd $PROJECT_ROOT/src/go/
+    #build aml SDK
+    cd ./aml
+    CGO_ENABLED=1 GOOS=linux GOARCH=arm go build
+    CGO_ENABLED=1 GOOS=linux GOARCH=arm go install
+    #build samples
+    cd ../samples
+    CGO_ENABLED=1 GOOS=linux GOARCH=arm go build -a sample.go
+}
+
 clean_aml() {
     echo -e "Cleaning ${BLUE}${PROJECT_ROOT}${NO_COLOUR}"
     echo -e "Deleting  ${RED}${PROJECT_ROOT}/src/${NO_COLOUR}"
@@ -99,7 +110,7 @@ clean_aml() {
 usage() {
     echo -e "${BLUE}Usage:${NO_COLOUR} ./build_common.sh <option>"
     echo -e "${GREEN}Options:${NO_COLOUR}"
-    echo "  --target_arch=[x86|x86_64|armhf|arm64]                      :  Choose Target Architecture"
+    echo "  --target_arch=[x86|x86_64|armhf|arm64|armhf-native]         :  Choose Target Architecture"
     echo "  --build_mode=[release|debug](default: release)              :  Build in release or debug mode"
     echo "  --disable_protobuf=[true|false](default: false)             :  Disable protobuf feature"
     echo "  --install_prerequisites=[true|false](default: false)        :  Install the prerequisite S/W to build aml [Protocol-buffer]"
@@ -136,9 +147,15 @@ build_aml() {
         cd src/go
         mkdir extlibs
     fi
+	
+    TARGET_ARCH=${AML_TARGET_ARCH}
+    if [ "armhf-native" = ${TARGET_ARCH} ]; then
+         TARGET_ARCH="armhf";
+    fi
+	
     cd $PROJECT_ROOT
-    cp -r dependencies/datamodel-aml-c/dependencies/datamodel-aml-cpp/out/linux/${AML_TARGET_ARCH}/${AML_BUILD_MODE}/lib* ./src/go/extlibs
-    cp -r dependencies/datamodel-aml-c/out/linux/${AML_TARGET_ARCH}/${AML_BUILD_MODE}/lib* ./src/go/extlibs
+    cp -r dependencies/datamodel-aml-c/dependencies/datamodel-aml-cpp/out/linux/${TARGET_ARCH}/${AML_BUILD_MODE}/lib* ./src/go/extlibs
+    cp -r dependencies/datamodel-aml-c/out/linux/${TARGET_ARCH}/${AML_BUILD_MODE}/lib* ./src/go/extlibs
 
     export CGO_CFLAGS=-I$PWD/dependencies/datamodel-aml-c/include
     export CGO_LDFLAGS=-L$PWD/src/go/extlibs
@@ -152,6 +169,8 @@ build_aml() {
          build_arm64;
     elif [ "armhf" = ${AML_TARGET_ARCH} ]; then
          build_armhf;
+    elif [ "armhf-native" = ${AML_TARGET_ARCH} ]; then
+         build_armhf_native;
     else
          echo -e "${RED}Not a supported architecture${NO_COLOUR}"
          usage; exit 1;
