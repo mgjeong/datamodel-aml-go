@@ -159,7 +159,7 @@ build_aml() {
 
     export CGO_CFLAGS=-I$PWD/dependencies/datamodel-aml-c/include
     export CGO_LDFLAGS=-L$PWD/src/go/extlibs
-    export CGO_LDFLAGS+=" -lcaml -laml"
+    export CGO_LDFLAGS=$CGO_LDFLAGS" -lcaml -laml"
 
     if [ "x86" = ${AML_TARGET_ARCH} ]; then
          build_x86_and_64;
