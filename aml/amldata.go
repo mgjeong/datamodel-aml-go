@@ -77,7 +77,7 @@ func (dataInstance *AMLData) GetValueStrArr(key string) ([]string, AMLErrorCode)
 	var size C.size_t
 	result := C.AMLData_GetValueStrArr(dataInstance.amlData, C.CString(key), &values, &size)
 	if result != AML_OK {
-		return nil, AMLErrorCode(int(result));
+		return nil, AMLErrorCode(int(result))
 	}
 	valueslice := (*[1 << 28]*C.char)(unsafe.Pointer(values))[:size:size]
 	gostrings := make([]string, size)
@@ -100,7 +100,7 @@ func (dataInstance *AMLData) GetKeys() ([]string, AMLErrorCode) {
 	var size C.size_t
 	result := C.AMLData_GetKeys(dataInstance.amlData, &keys, &size)
 	if result != AML_OK {
-		return nil, AMLErrorCode(int(result));
+		return nil, AMLErrorCode(int(result))
 	}
 	keyslice := (*[1 << 28]*C.char)(unsafe.Pointer(keys))[:size:size]
 	goKeys := make([]string, size)

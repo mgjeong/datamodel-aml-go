@@ -66,7 +66,7 @@ func (amlInstance *AMLObject) GetDataNames() ([]string, AMLErrorCode) {
 	var size C.size_t
 	result := C.AMLObject_GetDataNames(amlInstance.amlObject, &names, &size)
 	if result != AML_OK {
-		return nil, AMLErrorCode(int(result));
+		return nil, AMLErrorCode(int(result))
 	}
 	nameslice := (*[1 << 28]*C.char)(unsafe.Pointer(names))[:size:size]
 	gostrings := make([]string, size)
