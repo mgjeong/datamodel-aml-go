@@ -81,3 +81,38 @@ func TestAmlToData(t *testing.T) {
 		t.Errorf("Error objectFromStr is NULL")
 	}
 }
+
+func TestDataToByte(t *testing.T) {
+	repObject, _ := aml.CreateRepresentation(utils.FilePath)
+	amlObject := utils.GetAMLObject()
+	byteData, errorCode := repObject.DataToByte(amlObject)
+	if nil == byteData || errorCode != aml.AML_OK {
+		t.Errorf("Error byteData is NULL")
+	}
+}
+
+func TestByteToData(t *testing.T) {
+	repObject, _ := aml.CreateRepresentation(utils.FilePath)
+	amlObject := utils.GetAMLObject()
+	byteData, _ := repObject.DataToByte(amlObject)
+	amlObjectFromByte, errorCode := repObject.ByteToData(byteData)
+	if nil == amlObjectFromByte || errorCode != aml.AML_OK {
+		t.Errorf("Error amlObjectFromByte is NULL")
+	}
+}
+
+func TestNegativeDataToByte(t *testing.T) {
+	repObject, _ := aml.CreateRepresentation(utils.FilePath)
+	byteData, errorCode := repObject.DataToByte(nil)
+	if nil != byteData || errorCode != aml.AML_INVALID_PARAM {
+		t.Errorf("Failed")
+	}
+}
+
+func TestNegativeByteToData(t *testing.T) {
+	repObject, _ := aml.CreateRepresentation(utils.FilePath)
+	amlObjectFromByte, errorCode := repObject.ByteToData(nil)
+	if nil != amlObjectFromByte || errorCode != aml.AML_INVALID_PARAM {
+		t.Errorf("Failed")
+	}
+}

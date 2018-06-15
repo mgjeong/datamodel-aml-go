@@ -40,6 +40,7 @@ func printAMLData(amlData *aml.AMLData, depth int) {
 			fmt.Printf("%s", value)
 		} else if aml.AMLVALTYPE_STRINGARRAY == valType {
 			values, _ := amlData.GetValueStrArr(keys[i])
+			fmt.Printf("[")
 			for j := 0; j < len(values); j++ {
 				fmt.Printf("%s", values[j])
 				if j != len(values)-1 {
@@ -122,13 +123,26 @@ func main() {
 	fmt.Printf("\n\n-------------------------------------------------------------\n\n")
 
 	//convert data to aml string
+	fmt.Println("DataToAml:")
 	amlStr, _ := repObject.DataToAml(amlObj)
 	fmt.Printf("%s", amlStr)
 	fmt.Printf("\n\n-------------------------------------------------------------\n\n")
 
 	//convert to aml string
+	fmt.Println("AmlToData:")
 	objectFromStr, _ := repObject.AmlToData(amlStr)
 	printAMLObject(objectFromStr)
+	fmt.Printf("\n}")
+	fmt.Printf("\n\n-------------------------------------------------------------\n\n")
+
+	//convert data to byte
+	byteArray, _ := repObject.DataToByte(amlObject)
+	fmt.Println("DataToByte done")
+	fmt.Printf("\n-------------------------------------------------------------\n\n")
+
+	fmt.Println("ByteToData:")
+	byteAMLObj, _ := repObject.ByteToData(byteArray)
+	printAMLObject(byteAMLObj)
 	fmt.Printf("\n}")
 	fmt.Printf("\n\n-------------------------------------------------------------\n\n")
 }

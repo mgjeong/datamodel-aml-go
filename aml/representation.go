@@ -20,6 +20,7 @@ package aml
 
 // #include "camlrepresentation.h"
 import "C"
+import "unsafe"
 
 // Structure represents Representation.
 type Representation struct {
@@ -68,5 +69,29 @@ func (repInstance *Representation) DataToAml(amlObject *AMLObject) (string, AMLE
 func (repInstance *Representation) AmlToData(amlStr string) (*AMLObject, AMLErrorCode) {
 	instance := &AMLObject{}
 	result := C.Representation_AmlToData(repInstance.representation, C.CString(amlStr), &(instance.amlObject))
+	return instance, AMLErrorCode(int(result))
+}
+
+// AMLObject to Protobuf byte data to match the AML model information
+// which is set on CreateRepresentation().
+func (repInstance *Representation) DataToByte(amlObject *AMLObject) ([]byte, AMLErrorCode) {
+	if nil == amlObject {
+		return nil, AML_INVALID_PARAM
+	}
+	var data *C.uint8_t
+	var size C.size_t
+	result := C.Representation_DataToByte(repInstance.representation, amlObject.amlObject, &data, &size)
+	byteSlice := (*[1 << 28]byte)(unsafe.Pointer(data))[:size:size]
+	return byteSlice, AMLErrorCode(int(result))
+}
+
+// Converts Protobuf byte data to AMLObject to match the AML model information
+// which is set on CreateRepresentation()
+func (repInstance *Representation) ByteToData(data []byte) (*AMLObject, AMLErrorCode) {
+	if nil == data {
+		return nil, AML_INVALID_PARAM
+	}
+	instance := &AMLObject{}
+	result := C.Representation_ByteToData(repInstance.representation, (*C.uint8_t)(&data[0]), C.size_t(len(data)), &(instance.amlObject))
 	return instance, AMLErrorCode(int(result))
 }
