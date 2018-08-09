@@ -136,7 +136,7 @@ func main() {
 	fmt.Printf("\n\n-------------------------------------------------------------\n\n")
 
 	//convert data to byte
-	byteArray, _ := repObject.DataToByte(amlObject)
+	byteArray, _ := repObject.DataToByte(amlObj)
 	fmt.Println("DataToByte done")
 	fmt.Printf("\n-------------------------------------------------------------\n\n")
 
