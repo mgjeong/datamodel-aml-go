@@ -36,8 +36,8 @@ func GetAMLObject() *aml.AMLObject {
 
 	// create "Model" data
 	model, _ := aml.CreateAMLData()
-	model.SetValueStr("ctname", "Model_107.113.97.248")
-	model.SetValueStr("con", "SR-P7-970")
+	model.SetValueStr("a", "Model_107.113.97.248")
+	model.SetValueStr("b", "SR-P7-970")
 
 	// create "Sample" data
 	axis, _ := aml.CreateAMLData()
@@ -55,7 +55,7 @@ func GetAMLObject() *aml.AMLObject {
 	sample.SetValueStrArr("appendix", appendix[:])
 
 	// set data to object
-	amlObj, _ := aml.CreateAMLObject("Robot0001", time.Now().Format("20060102150405"))
+	amlObj, _ := aml.CreateAMLObject("SAMPLE001", time.Now().Format("20060102150405"))
 	amlObj.AddData("Model", model)
 	amlObj.AddData("Sample", sample)
 
