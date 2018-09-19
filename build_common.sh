@@ -48,6 +48,8 @@ install_dependencies() {
 
     # Build datamodel-aml-c library
     cd $PROJECT_ROOT/dependencies/datamodel-aml-c
+	 git fetch origin
+	 git checkout v1.0_rel
     echo -e "${GREEN}Building datamodel-aml-c library and its dependencies${NO_COLOUR}"
     ./build_common.sh --target_arch=${AML_TARGET_ARCH} --install_prerequisites=${AML_INSTALL_PREREQUISITES} --build_mode=${AML_BUILD_MODE} --logging=${AML_LOGGING} --disable_protobuf=${AML_DISABLE_PROTOBUF}
     echo -e "${GREEN}Install dependencies done${NO_COLOUR}"
