@@ -94,8 +94,8 @@ func main() {
 
 	// create "Model" data
 	model, _ := aml.CreateAMLData()
-	model.SetValueStr("ctname", "Model_107.113.97.248")
-	model.SetValueStr("con", "SR-P7-970")
+	model.SetValueStr("a", "Model_107.113.97.248")
+	model.SetValueStr("b", "SR-P7-970")
 
 	// create "Sample" data
 	axis, _ := aml.CreateAMLData()
