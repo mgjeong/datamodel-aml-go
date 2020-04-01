@@ -43,7 +43,7 @@ install_dependencies() {
     else
         mkdir dependencies
         cd ./dependencies
-        git clone git@github.sec.samsung.net:RS7-EdgeComputing/datamodel-aml-c.git
+        git clone https://github.com/edgexfoundry-holding/datamodel-aml-c.git
     fi
 
     # Build datamodel-aml-c library
