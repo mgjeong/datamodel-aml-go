@@ -1,6 +1,6 @@
 # DataModel AML library (go)
 
-datamodel-aml-go is a go binding written over [datamodel-aml-c](https://github.sec.samsung.net/RS7-EdgeComputing/datamodel-aml-c), that provides the way to present raw data(key/value based) to AutomationML(AML) standard format.
+datamodel-aml-go is a go binding written over [datamodel-aml-c](https://github.com/edgexfoundry-holding/datamodel-aml-c), that provides the way to present raw data(key/value based) to AutomationML(AML) standard format.
  - Transform raw data to AML data(XML).
  - Serialization / Deserialization AML data using protobuf.
  
@@ -12,7 +12,7 @@ datamodel-aml-go is a go binding written over [datamodel-aml-c](https://github.s
   
 - datamodel-aml-c
   - Since datamodel-aml-c will be downloaded and built when datamodel-aml-go is built, check the prerequisites of it.
-  - [Prerequisites](https://github.sec.samsung.net/RS7-EdgeComputing/datamodel-aml-c)
+  - [Prerequisites](https://github.com/edgexfoundry-holding/datamodel-aml-c)
 
 ## How to build ##
 1. Goto: ~/datamodel-aml-go/
